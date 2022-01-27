@@ -18,4 +18,10 @@ exports.isAuthUser = catchAsyncError(async (req, res, next) => {
   next()
 })
 
-exports.checkUser = catchAsyncError(async (req, res, next) => {})
+//for upadte delete product by user who added
+// exports.checkUser = (product) => {
+//   return (req, res, next) => {
+//     if (!product.userId === res.user.id) new ErrorHandler('not valid user', 400)
+//     next()
+//   }
+// }

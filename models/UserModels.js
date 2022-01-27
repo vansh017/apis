@@ -2,6 +2,7 @@ const mongoose = require('mongoose')
 const validator = require('email-validator')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
+const crypto = require('crypto')
 
 const userSchema = new mongoose.Schema({
   name: {
@@ -17,7 +18,6 @@ const userSchema = new mongoose.Schema({
   password: {
     type: String,
     required: [true, 'please enter your password'],
-    select: false,
   },
   avatar: {
     public_id: {
@@ -29,6 +29,10 @@ const userSchema = new mongoose.Schema({
       // required: true,
     },
   },
+  department: {
+    type: String,
+  },
+
   address: {
     type: String,
   },
@@ -59,5 +63,16 @@ userSchema.methods.comparePassword = async function (pass) {
 }
 
 //forgot password
+
+userSchema.methods.getResetPasswordToken = function () {
+  const resetToken = crypto.randomBytes(20).toString('hex')
+
+  this.resetPasswordToken = crypto
+    .createHash('sha256')
+    .update(resetToken)
+    .digest('hex')
+  this.resetPasswordExpire = Date.now() + 10 * 60 * 1000
+  return resetToken
+}
 
 module.exports = mongoose.model('User', userSchema)

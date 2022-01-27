@@ -2,6 +2,7 @@ const Product = require('../models/ProductModels')
 const catchAsyncError = require('../middleware/catchAsyncError')
 const ErrorHandler = require('../middleware/errorHandler')
 const Features = require('./Features')
+const { checkUser } = require('../middleware/auth')
 
 //create product
 exports.createProduct = catchAsyncError(async (req, res, next) => {
@@ -43,6 +44,7 @@ exports.updateProducts = catchAsyncError(async (req, res, next) => {
   if (!product) {
     return next(new ErrorHandler('product not found', 404))
   }
+
   product = await Product.findByIdAndUpdate(req.params.id, req.body, {
     new: true,
     runValidators: false,
