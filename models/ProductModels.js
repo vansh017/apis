@@ -27,9 +27,21 @@ const productSchema = new mongoose.Schema({
         type: String,
         required: true,
       },
+      alt: {
+        type: String,
+      },
     },
   ],
+  department: {
+    type: String,
+  },
   category: [
+    {
+      type: String,
+      required: [true, 'please enter category'],
+    },
+  ],
+  tags: [
     {
       type: String,
       required: [true, 'please enter category'],
