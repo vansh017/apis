@@ -11,7 +11,7 @@ const router = express.Router()
 
 router.route('/order/new').post(isAuthUser, newOrder)
 router.route('/order/:id').get(isAuthUser, orderDetails)
-router.route('/myOrders').get(isAuthUser, allOrders)
+router.route('/myOrders').get(allOrders)
 router.route('/order/update/:id').put(isAuthUser, updateOrder)
 router.route('/order/delete/:id').delete(isAuthUser, deleteOrder)
 

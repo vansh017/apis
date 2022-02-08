@@ -134,10 +134,10 @@ exports.updatePass = catchAsyncError(async (req, res, next) => {
 })
 
 exports.updateProfile = catchAsyncError(async (req, res, next) => {
-  const newData = {
+  const newUserData = {
     name: req.body.name,
-    department: req.body.department,
-    sem: req.body.sem,
+
+    email: req.body.email,
   }
 
   const user = await User.findByIdAndUpdate(req.user.id, newData, {

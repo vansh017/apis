@@ -7,6 +7,10 @@ const { checkUser } = require('../middleware/auth')
 //create product
 exports.createProduct = catchAsyncError(async (req, res, next) => {
   req.body.userId = req.user.id
+  req.body.userName = req.user.name
+  // const name = req.user.id
+  // req.body.userName = req.user.name
+
   const product = await Product.create(req.body)
   res.status(201).json({
     success: true,
@@ -31,6 +35,7 @@ exports.getAllProducts = catchAsyncError(async (req, res) => {
 exports.getProductDetails = catchAsyncError(async (req, res, next) => {
   const product = await Product.findById(req.params.id)
 
+  // console.log(name)
   if (!product) return next(new ErrorHandler('product not found', 400))
 
   res.status(200).json({

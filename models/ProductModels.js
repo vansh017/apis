@@ -21,11 +21,11 @@ const productSchema = new mongoose.Schema({
     {
       public_id: {
         type: String,
-        required: true,
+        // required: true,
       },
       url: {
         type: String,
-        required: true,
+        // required: true,
       },
       alt: {
         type: String,
@@ -35,22 +35,25 @@ const productSchema = new mongoose.Schema({
   department: {
     type: String,
   },
-  category: [
-    {
-      type: String,
-      required: [true, 'please enter category'],
-    },
-  ],
+  category: {
+    type: String,
+    required: [true, 'please enter category'],
+  },
+
   tags: [
     {
       type: String,
-      required: [true, 'please enter category'],
+      // required: [true, 'please enter category'],
     },
   ],
   userId: {
     type: mongoose.Schema.ObjectId,
     ref: 'User',
     required: true,
+  },
+  userName: {
+    type: String,
+    // required: true,
   },
   createdAt: {
     type: Date,
