@@ -5,13 +5,13 @@ const ErrorHandler = require('../middleware/errorHandler')
 
 //creating new order
 exports.newOrder = catchAsyncError(async (req, res, next) => {
-  const { name, orderItems, phoneNo, image, totalPrice } = req.body
+  const { name, orderItems, address, phoneNo, totalPrice } = req.body
 
   const order = await Order.create({
     name,
     orderItems,
     phoneNo,
-    image,
+    address,
     totalPrice,
     user: req.user._id,
   })

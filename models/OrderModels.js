@@ -1,5 +1,3 @@
-// const mongoose
-
 const mongoose = require('mongoose')
 
 const OrderSchema = new mongoose.Schema({
@@ -7,6 +5,11 @@ const OrderSchema = new mongoose.Schema({
     type: Number,
     required: true,
     minlength: 10,
+  },
+  address: {
+    type: String,
+    required: true,
+    minlength: 5,
   },
   orderItems: [
     {
@@ -42,6 +45,10 @@ const OrderSchema = new mongoose.Schema({
   totalPrice: {
     type: Number,
     default: 0,
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now,
   },
 })
 

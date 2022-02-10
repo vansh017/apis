@@ -63,6 +63,16 @@ exports.updateProducts = catchAsyncError(async (req, res, next) => {
   })
 })
 
+//user all product
+exports.myProducts = catchAsyncError(async (req, res, next) => {
+  const products = await Product.find({ userId: req.user._id })
+
+  res.status(200).json({
+    success: true,
+    products,
+  })
+})
+
 //delete product
 exports.deleteProduct = catchAsyncError(async (req, res, next) => {
   const product = await Product.findById(req.params.id)
