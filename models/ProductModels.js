@@ -39,6 +39,10 @@ const productSchema = new mongoose.Schema({
     type: String,
     required: [true, 'please enter category'],
   },
+  status: {
+    type: String,
+    default: 'available',
+  },
 
   tags: [
     {

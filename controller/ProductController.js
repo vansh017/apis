@@ -3,13 +3,36 @@ const catchAsyncError = require('../middleware/catchAsyncError')
 const ErrorHandler = require('../middleware/errorHandler')
 const Features = require('./Features')
 const { checkUser } = require('../middleware/auth')
+const cloudinary = require('cloudinary')
 
 //create product
 exports.createProduct = catchAsyncError(async (req, res, next) => {
-  req.body.userId = req.user.id
-  req.body.userName = req.user.name
   // const name = req.user.id
   // req.body.userName = req.user.name
+  let images = []
+
+  if (typeof req.body.images === 'string') {
+    images.push(req.body.images)
+  } else {
+    images = req.body.images
+  }
+
+  const imagesLinks = []
+
+  for (let i = 0; i < 1; i++) {
+    const result = await cloudinary.v2.uploader.upload(images[i], {
+      folder: 'products',
+    })
+
+    imagesLinks.push({
+      public_id: result.public_id,
+      url: result.secure_url,
+    })
+  }
+
+  req.body.images = imagesLinks
+  req.body.userId = req.user.id
+  req.body.userName = req.user.name
 
   const product = await Product.create(req.body)
   res.status(201).json({

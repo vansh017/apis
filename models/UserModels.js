@@ -32,8 +32,12 @@ const userSchema = new mongoose.Schema({
   department: {
     type: String,
   },
+  mobileNo: {
+    type: Number,
+    minlength: 10,
+  },
   sem: {
-    type: String,
+    type: Number,
   },
 
   address: {
