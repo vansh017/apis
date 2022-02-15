@@ -47,6 +47,10 @@ const userSchema = new mongoose.Schema({
     type: String,
     default: 'user',
   },
+  socketId: {
+    type: String,
+  },
+
   createdAt: {
     type: Date,
     default: Date.now,

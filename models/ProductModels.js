@@ -39,7 +39,7 @@ const productSchema = new mongoose.Schema({
     type: String,
     required: [true, 'please enter category'],
   },
-  status: {
+  productStatus: {
     type: String,
     default: 'available',
   },
@@ -55,9 +55,13 @@ const productSchema = new mongoose.Schema({
     ref: 'User',
     required: true,
   },
+
   userName: {
     type: String,
     // required: true,
+  },
+  userEmail: {
+    type: String,
   },
   createdAt: {
     type: Date,

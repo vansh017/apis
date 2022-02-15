@@ -9,20 +9,22 @@ const cloudinary = require('cloudinary')
 
 exports.registerUser = catchAsyncError(async (req, res, next) => {
   const { name, email, password } = req.body
-  const myCloud = await cloudinary.v2.uploader.upload(req.body.avatar, {
-    folder: 'avatar',
-    width: 150,
-    crop: 'scale',
-  })
+  // const myCloud = await cloudinary.v2.uploader.upload(req.body.avatar, {
+  //   folder: 'avatar',
+  //   width: 150,
+  //   crop: 'scale',
+  // })
+  // 61efa6b4b6cceb0eaabae821
 
   const user = await User.create({
     name,
     email,
     password,
-    avatar: {
-      public_id: myCloud.public_id,
-      url: myCloud.secure_url,
-    },
+
+    // avatar: {
+    //   public_id: myCloud.public_id,
+    //   url: myCloud.secure_url,
+    // },
   })
   sendToken(user, 201, res)
 })
@@ -135,9 +137,9 @@ exports.updatePass = catchAsyncError(async (req, res, next) => {
 
   if (!checkPassword) return next(new ErrorHandler('invalid  password', 401))
 
-  if (req.body.newPassword !== req.body.confirmNewPassword)
+  if (req.body.newPassword !== req.body.confirmPassword)
     return next(new ErrorHandler('Password does not match', 401))
-
+  // oldPassword, newPassword, confirmPassword
   user.password = req.body.newPassword
   await user.save()
   sendToken(user, 200, res)

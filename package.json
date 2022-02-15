@@ -21,6 +21,7 @@
     "mongoose": "^6.1.7",
     "nodemailer": "^6.7.2",
     "nodemon": "^2.0.15",
+    "uuidv4": "^6.2.12",
     "validator": "^13.7.0"
   }
 }

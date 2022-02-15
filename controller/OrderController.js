@@ -22,6 +22,23 @@ exports.newOrder = catchAsyncError(async (req, res, next) => {
   })
 })
 
+// get all Orders -- Admin
+exports.getAdminOrders = catchAsyncError(async (req, res, next) => {
+  const orders = await Order.find()
+
+  let totalAmount = 0
+
+  orders.forEach((order) => {
+    totalAmount += order.totalPrice
+  })
+
+  res.status(200).json({
+    success: true,
+    totalAmount,
+    orders,
+  })
+})
+
 //order details
 exports.orderDetails = catchAsyncError(async (req, res, next) => {
   const order = await Order.findById(req.params.id).populate(
@@ -53,7 +70,6 @@ exports.updateOrder = catchAsyncError(async (req, res, next) => {
 
   if (order.orderStatus === 'delivered')
     return next(new ErrorHandler('product delivered', 404))
-
   order.orderStatus = req.body.status
 
   await order.save()

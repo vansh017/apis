@@ -15,10 +15,12 @@ app.use(fileUpload())
 const product = require('./routes/ProductRoutes')
 const user = require('./routes/UserRoutes')
 const order = require('./routes/OrderRoutes')
+const request = require('./routes/RequestRoutes')
 
 app.use('/api', product)
 app.use('/api', user)
 app.use('/api', order)
+app.use('/api', request)
 
 // middleware for error
 app.use(errorMiddleware)
