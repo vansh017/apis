@@ -1,5 +1,5 @@
-// const res = require('express/lib/response')
-const Request = require('../models/RequestModal')
+const res = require('express/lib/response')
+const Request = require('../models/RequestModels')
 const catchAsyncError = require('../middleware/catchAsyncError')
 const ErrorHandler = require('../middleware/errorHandler')
 
@@ -8,8 +8,11 @@ const { checkUser } = require('../middleware/auth')
 //create request
 
 exports.createRequest = catchAsyncError(async (req, res, next) => {
+  req.body.userId = req.user.id
+  req.body.userName = req.user.name
+
   const request = await Request.create(req.body)
-  console.log(req.body)
+
   res.status(201).json({
     success: true,
     request,
