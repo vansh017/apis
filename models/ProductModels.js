@@ -35,6 +35,9 @@ const productSchema = new mongoose.Schema({
   department: {
     type: String,
   },
+  passingYear: {
+    type: Number,
+  },
   category: {
     type: String,
     required: [true, 'please enter category'],

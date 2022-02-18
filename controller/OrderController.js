@@ -2,6 +2,7 @@ const catchAsyncError = require('../middleware/catchAsyncError')
 const Order = require('../models/OrderModels')
 const Product = require('../models/ProductModels')
 const ErrorHandler = require('../middleware/errorHandler')
+const sendEmail = require('../middleware/sendEmail')
 
 //creating new order
 exports.newOrder = catchAsyncError(async (req, res, next) => {
@@ -14,6 +15,7 @@ exports.newOrder = catchAsyncError(async (req, res, next) => {
     address,
     totalPrice,
     user: req.user._id,
+    userName: req.user.name,
   })
 
   res.status(200).json({
@@ -22,7 +24,7 @@ exports.newOrder = catchAsyncError(async (req, res, next) => {
   })
 })
 
-// get all Orders -- Admin
+// get Orders Admin
 exports.getAdminOrders = catchAsyncError(async (req, res, next) => {
   const orders = await Order.find()
 
@@ -79,6 +81,27 @@ exports.updateOrder = catchAsyncError(async (req, res, next) => {
   })
 })
 
+exports.confirmEmail = catchAsyncError(async (req, res, next) => {
+  const email = req.body.email
+  const subject = req.body.subject
+  const message = req.body.message
+
+  try {
+    await sendEmail({
+      email,
+      subject,
+      message,
+    })
+
+    res.status(200).json({
+      success: true,
+      message: `mail sent to ${email} successfully`,
+    })
+  } catch (err) {
+    return next(new ErrorHandler(err.message, 500))
+  }
+})
+
 //delete order
 exports.deleteOrder = catchAsyncError(async (req, res, next) => {
   const order = await Order.findById(req.params.id)
@@ -91,3 +114,5 @@ exports.deleteOrder = catchAsyncError(async (req, res, next) => {
     message: 'order deleted',
   })
 })
+
+//admin order

@@ -40,6 +40,9 @@ const OrderSchema = new mongoose.Schema({
     ref: 'User',
     // required: true,
   },
+  userName: {
+    type: String,
+  },
   orderStatus: {
     type: String,
 

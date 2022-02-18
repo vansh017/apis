@@ -31,6 +31,7 @@ exports.createProduct = catchAsyncError(async (req, res, next) => {
   req.body.images = imagesLinks
   req.body.userId = req.user.id
   req.body.userName = req.user.name
+  req.body.userEmail = req.user.email
 
   const product = await Product.create(req.body)
   res.status(201).json({

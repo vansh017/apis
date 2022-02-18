@@ -71,8 +71,9 @@ exports.forgotPassword = catchAsyncError(async (req, res, next) => {
   const resetPassUrl = `${req.protocol}://${req.get(
     'host'
   )}/api/password/reset/${resetToken}`
+  const resetPasswordUrl = `http://localhost:3000/password/reset/${resetToken}`
 
-  const message = `Your password reset token is \n\n ${resetPassUrl} \n\n `
+  const message = `Your password reset token is \n\n ${resetPasswordUrl} \n\n `
 
   try {
     await sendEmail({
@@ -161,5 +162,68 @@ exports.updateProfile = catchAsyncError(async (req, res, next) => {
   res.status(200).json({
     success: true,
     user,
+  })
+})
+
+//all user admin
+exports.getAllUser = catchAsyncError(async (req, res, next) => {
+  const users = await User.find()
+
+  res.status(200).json({
+    success: true,
+    users,
+  })
+})
+
+// Get single user (admin)
+exports.getSingleUser = catchAsyncError(async (req, res, next) => {
+  const user = await User.findById(req.params.id)
+
+  if (!user) {
+    return next(
+      new ErrorHandler(`User does not exist with Id: ${req.params.id}`)
+    )
+  }
+
+  res.status(200).json({
+    success: true,
+    user,
+  })
+})
+
+// update User Role -- Admin
+exports.updateUserRole = catchAsyncError(async (req, res, next) => {
+  const newUserData = {
+    name: req.body.name,
+    email: req.body.email,
+    role: req.body.role,
+  }
+
+  await User.findByIdAndUpdate(req.params.id, newUserData, {
+    new: true,
+    runValidators: true,
+    useFindAndModify: false,
+  })
+
+  res.status(200).json({
+    success: true,
+  })
+})
+
+// Delete User --Admin
+exports.deleteUser = catchAsyncError(async (req, res, next) => {
+  const user = await User.findById(req.params.id)
+
+  if (!user) {
+    return next(
+      new ErrorHandler(`User does not exist with Id: ${req.params.id}`, 400)
+    )
+  }
+
+  await user.remove()
+
+  res.status(200).json({
+    success: true,
+    message: 'User Deleted Successfully',
   })
 })
