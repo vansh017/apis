@@ -32,12 +32,8 @@ const userSchema = new mongoose.Schema({
   department: {
     type: String,
   },
-  mobileNo: {
-    type: Number,
-    minlength: 10,
-  },
   sem: {
-    type: Number,
+    type: String,
   },
 
   address: {
@@ -47,13 +43,11 @@ const userSchema = new mongoose.Schema({
     type: String,
     default: 'user',
   },
-
   createdAt: {
     type: Date,
     default: Date.now,
   },
   resetPasswordToken: String,
-
   resetPasswordExpire: Date,
 })
 

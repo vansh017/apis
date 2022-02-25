@@ -6,9 +6,6 @@ const OrderSchema = new mongoose.Schema({
     required: true,
     minlength: 10,
   },
-  email: {
-    type: String,
-  },
   address: {
     type: String,
     required: true,
@@ -39,9 +36,6 @@ const OrderSchema = new mongoose.Schema({
     type: mongoose.Schema.ObjectId,
     ref: 'User',
     // required: true,
-  },
-  userName: {
-    type: String,
   },
   orderStatus: {
     type: String,
