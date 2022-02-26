@@ -66,6 +66,9 @@ const productSchema = new mongoose.Schema({
   userEmail: {
     type: String,
   },
+  userDepartment:{
+    type:String,
+  },
   createdAt: {
     type: Date,
     default: Date.now,
